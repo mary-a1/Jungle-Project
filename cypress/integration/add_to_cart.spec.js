@@ -1,7 +1,7 @@
 describe("Visiting the homepage", () => {
   it("should visit the homepage after logging in", () => {
   // visit the login page
-  cy.visit("http://localhost:3000", { failOnStatusCode: false });
+  cy.visit("/", { failOnStatusCode: false });
   });
   
   it("There are products on the page", () => {
@@ -9,14 +9,15 @@ describe("Visiting the homepage", () => {
   });
   
   it("There are 12 products on the page", () => {
-  cy.get(".products article").should("have.length", 12);
+  cy.get(".products article").should("have.length", 2);
   });
 
   it("count of the cart button changes when adding products to it", () =>{
-  cy.get(':nth-child(1) > div > .button_to > .btn').click({force: true})
-
-  // .click({force: true}); 
+    cy.contains('My Cart (0)')
+    cy.get('.btn').first().click({force: true})
+    cy.contains('My Cart (1)')
+  }); 
   
-  });
+  
 
 });

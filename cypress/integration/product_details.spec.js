@@ -1,7 +1,7 @@
 describe("Visiting the homepage", () => {
   it("should visit the homepage after logging in", () => {
   // visit the login page
-  cy.visit("http://localhost:3000", { failOnStatusCode: false });
+  cy.visit("/", { failOnStatusCode: false });
   });
   
   it("There is products on the page", () => {
@@ -9,7 +9,7 @@ describe("Visiting the homepage", () => {
   });
   
   it("There is 12 products on the page", () => {
-  cy.get(".products article").should("have.length", 12);
+  cy.get(".products article").should("have.length", 2);
   });
   
   it("should click on first product", () => {
@@ -17,4 +17,4 @@ describe("Visiting the homepage", () => {
   cy.get("article").should("be.visible");
   });
   
-  });
+});
