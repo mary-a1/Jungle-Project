@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   before(:each) do 
-    @user = User.create(name: 'Molly David', email: "123@molly.com", password:'123Unicorns!', password_confirmation:'123Unicorns!')
+    @user = User.create(first_name: 'Molly', last_name:'David', email: "123@molly.com", password:'123Unicorns!', password_confirmation:'123Unicorns!')
   end
 
   describe 'Validations' do
@@ -19,27 +19,29 @@ RSpec.describe User, type: :model do
     end
 
     it "has a valid password" do
-      @user= User.new(name: "Molly David", email: '123@molly.com', password:"", password_confirmation: "")
+      @user= User.new(first_name: 'Molly', last_name:'David', email: '123@molly.com', password:"", password_confirmation: "")
       expect(@user).to_not be_valid
       expect(@user.errors.full_messages).to include("Password can't be blank")
     end
 
     it "has a unique email" do
-      @user1= User.create(name: 'Molly David', email: '123@mollly.com', password:'123Unicorns!', password_confirmation:'123Unicorns!')
-      @user2= User.create(name: 'Molly David', email: '123@MOLLLY.COM', password:'123Unicorns!', password_confirmation:'123Unicorns!')
+      @user1= User.create(first_name: 'Molly', last_name:'David', email: '123@mollly.com', password:'123Unicorns!', password_confirmation:'123Unicorns!')
+      @user2= User.create(first_name: 'Molly', last_name:'David', email: '123@MOLLLY.COM', password:'123Unicorns!', password_confirmation:'123Unicorns!')
       @user1.email = @user2.email
       expect(@user1).to be_valid
       expect(@user2.errors.full_messages).to include("Email has already been taken")
     end
 
     it "is not valid without a name" do
-      @user.name = nil
+      @user.first_name = nil
+      @user.last_name = nil
       expect(@user).to_not be_valid
-      expect(@user.errors.full_messages).to include("Name can't be blank")
+      expect(@user.errors.full_messages).to include("First name can't be blank")
+      expect(@user.errors.full_messages).to include("Last name can't be blank")
     end
 
     it "is not long enough of password" do
-      @user1= User.create(name: 'Maryan Jason', email: '123@mary.com', password:'123!', password_confirmation:'123!') 
+      @user1= User.create(first_name: 'Maryan', last_name:'Jason', email: '123@mary.com', password:'123!', password_confirmation:'123!') 
       expect(@user1).to_not be_valid
       expect(@user1.errors.full_messages).to include("Password is too short (minimum is 8 characters)")
     end
